@@ -1,6 +1,23 @@
 import request from 'supertest';
-
+import { MongoClient } from 'mongodb';
+import * as dotenv from 'dotenv';
+dotenv.config();
 import app from '../../app';
+
+// beforeAll(async () => {
+//   try {
+//     await Todos.drop();
+//   } catch (error) {}
+// });
+
+const { MONGO_URI = 'localhost/api' } = process.env;
+beforeAll(async () => {
+  const client = new MongoClient(MONGO_URI);
+  try {
+    await client.connect();
+    console.log('successfully connected to database');
+  } catch (error) {}
+});
 
 describe('GET /api/v1/todos', () => {
   it('responds with a json message', async () => {
@@ -11,9 +28,7 @@ describe('GET /api/v1/todos', () => {
       .expect(200)
       .then((response) => {
         expect(response.body).toHaveProperty('length');
-        expect(response.body.length).toBe(1);
-        expect(response.body[0]).toHaveProperty('content');
-        expect(response.body[0]).toHaveProperty('done');
+        expect(response.body.length).toBe(0);
       });
   });
 });

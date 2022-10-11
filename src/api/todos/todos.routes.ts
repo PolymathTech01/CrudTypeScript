@@ -1,16 +1,8 @@
-import { Router, Request, Response } from 'express';
-import Todo from './todos.models';
-
+import { Router } from 'express';
+import * as TodoHandlers from './todos.handler';
 const router = Router();
 
-router.get('/', (req: Request, res: Response<Todo[]>) => {
-  res.json([
-    {
-      content: 'TODO',
-      done: false,
-    },
-  ]);
-});
+router.get('/', TodoHandlers.findAll);
 
 // router.get<{}, Todo[]>('/', (req, res) => {
 //   res.json([{
