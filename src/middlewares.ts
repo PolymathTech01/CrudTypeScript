@@ -13,6 +13,7 @@ export function errorHandler(
   err: Error,
   req: Request,
   res: Response<ErrorResponse>,
+  // eslint-disable-next-line @typescript-eslint/comma-dangle
   next: NextFunction
 ) {
   const statusCode = res.statusCode !== 200 ? res.statusCode : 500;
